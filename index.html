@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
     <script src="Basic_interaction.js"></script>
     <title>SRIKANTH PETTEM</title>
 </head>
+
 <body>
     <!-- Header -->
     <section>
@@ -28,29 +30,64 @@
                 <span class="pipe"> | </span>
                 <!-- Availability status placeholder -->
                 <span class="pipe" id="availability-label">Status:</span>
-                <span class="pipe" id="availability-status">Loading...</span>
+                <span class="pipe" id="status">Loading...</span>
             </div>
         </header>
     </section>
-    <!--Script to get the Status-->
+    <!--MongoDB Status Fetching-->
     <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const statusEl = document.getElementById('availability-status');
-        const endpoint = 'https://script.google.com/macros/s/AKfycbyXOIjjYwgGqZBGjP5likcisV_tVIrnDpIe4HceYfVZUUMD98LANGUzwuFvFJ2LYKVD/exec'; // replace with your Web App URL
-
-        async function getStatus() {
-          try {
-            const res = await fetch(endpoint);
-            const data = await res.json();
-            statusEl.textContent = data.status || 'Unknown';
-          } catch (err) {
-            console.error('Failed to fetch status:', err);
-            statusEl.textContent = 'Error';
-          }
+        async function fetchPublicIP() {
+            try {
+                const res = await fetch("https://api.ipify.org?format=json");
+                const { ip } = await res.json();
+                return ip;
+            } catch (err) {
+                console.warn("ipify failed, falling back to default IP or error handler", err);
+                return null;
+            }
         }
 
-        getStatus();
-      });
+        async function fetchStatus() {
+            const publicIP = await fetchPublicIP();
+            if (!publicIP) {
+                document.getElementById("status").textContent = "Status unavailable";
+                return;
+            }
+
+            try {
+                const res = await fetch(`http://${publicIP}:3000/status`, {
+                    headers: { "Authorization": "Basic " + btoa("apiuser:apipassword") }
+                });
+                const data = await res.json();
+                document.getElementById("status").textContent = data[0]?.Status ?? "No data";
+            } catch (err) {
+                console.error("Error fetching status from your API:", err);
+                document.getElementById("status").textContent = "Error fetching status";
+            }
+        }
+
+        fetchStatus();
+    </script>
+    <!--MongoDB Status Fetching End-->
+    <!--Script to get the Status-->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const statusEl = document.getElementById('availability-status');
+            const endpoint = 'https://script.google.com/macros/s/AKfycbyXOIjjYwgGqZBGjP5likcisV_tVIrnDpIe4HceYfVZUUMD98LANGUzwuFvFJ2LYKVD/exec'; // replace with your Web App URL
+
+            async function getStatus() {
+                try {
+                    const res = await fetch(endpoint);
+                    const data = await res.json();
+                    statusEl.textContent = data.status || 'Unknown';
+                } catch (err) {
+                    console.error('Failed to fetch status:', err);
+                    statusEl.textContent = 'Error';
+                }
+            }
+
+            getStatus();
+        });
     </script>
     <!--Script to get the status-->
     <!-- Intro : Just name and image -->
@@ -79,12 +116,16 @@
                 <tr>
                     <td class="column_space"></td> <!--Space-->
                     <td class="wrap_column">
-                        Oracle<br/>
+                        Oracle<br />
                         Staff Consultant
                     </td>
-                    <td class="column_space"><hr/></td> <!--Space-->
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
                     <td class="wrap_column_time">Present</td>
-                    <td class="column_space"><hr/></td> <!--Space-->
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
                     <td class="wrap_column">
                         Learning Next Gen Sales
                     </td>
@@ -105,14 +146,19 @@
                 <tr>
                     <td class="column_space"></td> <!--Space-->
                     <td class="wrap_column">
-                        InnovaCX<br/>
+                        InnovaCX<br />
                         Specialist-Enterprise Innovations
                     </td>
-                    <td class="column_space"><hr/></td> <!--Space-->
-                    <td  class="wrap_column_time">2023</td>
-                    <td class="column_space"><hr/></td> <!--Space-->
-                    <td  class="wrap_column">
-                        Here I exposed to the real IT industry. And got chance to understand complete software life cycle from customer with a problem to customer with a solution.
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
+                    <td class="wrap_column_time">2023</td>
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
+                    <td class="wrap_column">
+                        Here I exposed to the real IT industry. And got chance to understand complete software life
+                        cycle from customer with a problem to customer with a solution.
                     </td>
                     <td class="column_space"></td> <!--Space-->
                 </tr>
@@ -131,14 +177,19 @@
                 <tr>
                     <td class="column_space"></td> <!--Space-->
                     <td class="wrap_column">
-                        Kakatiya University<br/>
+                        Kakatiya University<br />
                         Bachelor of Technology - Under Graduation
                     </td>
-                    <td class="column_space"><hr/></td> <!--Space-->
-                    <td  class="wrap_column_time">2021</td>
-                    <td class="column_space"><hr/></td> <!--Space-->
-                    <td  class="wrap_column">
-                        Here I got the chance to push myself to became a better version of me. I proved my Leadership, problem solving skils by fulfilling the Class Representative role effectively.
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
+                    <td class="wrap_column_time">2021</td>
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
+                    <td class="wrap_column">
+                        Here I got the chance to push myself to became a better version of me. I proved my Leadership,
+                        problem solving skils by fulfilling the Class Representative role effectively.
                     </td>
                     <td class="column_space"></td> <!--Space-->
                 </tr>
@@ -157,13 +208,17 @@
                 <tr>
                     <td class="column_space"></td> <!--Space-->
                     <td class="wrap_column">
-                        Academic Tutor(Self Employed)<br/>
+                        Academic Tutor(Self Employed)<br />
                         Nava Bharat Public School
                     </td>
-                    <td class="column_space"><hr/></td> <!--Space-->
-                    <td  class="wrap_column_time">2019</td>
-                    <td class="column_space"><hr/></td> <!--Space-->
-                    <td  class="wrap_column">
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
+                    <td class="wrap_column_time">2019</td>
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
+                    <td class="wrap_column">
                         Here I started exposing in the society and improved my social communication skills.
                     </td>
                     <td class="column_space"></td> <!--Space-->
@@ -183,13 +238,17 @@
                 <tr>
                     <td class="column_space"></td> <!--Space-->
                     <td class="wrap_column">
-                        Vagheshwara Junior College<br/>
+                        Vagheshwara Junior College<br />
                         Telangana State Board of Intermediate Education
                     </td>
-                    <td class="column_space"><hr/></td> <!--Space-->
-                    <td  class="wrap_column_time">2017</td>
-                    <td class="column_space"><hr/></td> <!--Space-->
-                    <td  class="wrap_column">
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
+                    <td class="wrap_column_time">2017</td>
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
+                    <td class="wrap_column">
                         During my intermediate I was intensively interested in geometry and physics.
                     </td>
                     <td class="column_space"></td> <!--Space-->
@@ -209,14 +268,19 @@
                 <tr>
                     <td class="column_space"></td> <!--Space-->
                     <td class="wrap_column">
-                        Zilla Parishad High School<br/>
+                        Zilla Parishad High School<br />
                         Board of Secondary Education
                     </td>
-                    <td class="column_space"><hr/></td> <!--Space-->
-                    <td  class="wrap_column_time">2015</td>
-                    <td class="column_space"><hr/></td> <!--Space-->
-                    <td  class="wrap_column">
-                        This is the place where I started learning how to learn and unlearn under the guidance of supportive, encouraging teachers.
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
+                    <td class="wrap_column_time">2015</td>
+                    <td class="column_space">
+                        <hr />
+                    </td> <!--Space-->
+                    <td class="wrap_column">
+                        This is the place where I started learning how to learn and unlearn under the guidance of
+                        supportive, encouraging teachers.
                     </td>
                     <td class="column_space"></td> <!--Space-->
                 </tr>
@@ -233,12 +297,12 @@
             </table>
         </div>
     </section>
-     <!-- Writing -->
-     <section id="writing">
+    <!-- Writing -->
+    <section id="writing">
 
         <div class="writing">
-            <hr/>
-            <span class= "Writings_Header">Writings</span><br/>
+            <hr />
+            <span class="Writings_Header">Writings</span><br />
             <table class="writing_table">
                 <tr class="writing_row_space">
                     <td></td>
@@ -253,27 +317,35 @@
                     <td class="writing_column">
                         We For Us
                     </td>
-                    <td class="writing_space"><hr/></td>
+                    <td class="writing_space">
+                        <hr />
+                    </td>
                     <td class="writing_column">
                         <img class="weforuslogo_img" src="We_For_Us.jpeg" alt="We For Us Logo">
                     </td>
-                    <td class="writing_space"><hr/></td>
+                    <td class="writing_space">
+                        <hr />
+                    </td>
                     <td class="writing_column">
                         Newsletter
                     </td>
-                    <td class="writing_space"><hr/></td>
+                    <td class="writing_space">
+                        <hr />
+                    </td>
                     <td class="writing_column">
-                        <span><a class="linkedinbutton" href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=6882975974401687552" target="_blank">Subscribe on<br/>LinkedIn</a></span>
+                        <span><a class="linkedinbutton"
+                                href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=6882975974401687552"
+                                target="_blank">Subscribe on<br />LinkedIn</a></span>
                     </td>
                 </tr>
             </table>
         </div>
     </section>
-     <!-- photography -->
-     <section id="photography">
+    <!-- photography -->
+    <section id="photography">
         <div class="photography">
-            <hr/>
-            <span class= "photography_Header">Photography</span><br/>
+            <hr />
+            <span class="photography_Header">Photography</span><br />
             <table class="photography_table">
                 <tr class="photography_row_space">
                     <td></td>
@@ -288,17 +360,24 @@
                     <td class="photography_column">
                         We For Us
                     </td>
-                    <td class="photography_space"><hr/></td>
+                    <td class="photography_space">
+                        <hr />
+                    </td>
                     <td class="photography_column">
                         <img class="weforuslogo_img" src="We_For_Us.jpeg" alt="We For Us Logo">
                     </td>
-                    <td class="photography_space"><hr/></td>
+                    <td class="photography_space">
+                        <hr />
+                    </td>
                     <td class="photography_column">
                         YouTube
                     </td>
-                    <td class="photography_space"><hr/></td>
+                    <td class="photography_space">
+                        <hr />
+                    </td>
                     <td class="photography_column">
-                        <span><a class="Youtubebutton" href="https://www.youtube.com/@weforus3" target="_blank">Subscribe on<br/>Youtube</a></span>
+                        <span><a class="Youtubebutton" href="https://www.youtube.com/@weforus3"
+                                target="_blank">Subscribe on<br />Youtube</a></span>
                     </td>
                 </tr>
                 <tr class="photography_row_space">
@@ -314,17 +393,24 @@
                     <td class="photography_column">
                         _We_For_Us_
                     </td>
-                    <td class="photography_space"><hr/></td>
+                    <td class="photography_space">
+                        <hr />
+                    </td>
                     <td class="photography_column">
                         <img class="weforuslogo_img" src="We_For_Us.jpeg" alt="We For Us Logo">
                     </td>
-                    <td class="photography_space"><hr/></td>
+                    <td class="photography_space">
+                        <hr />
+                    </td>
                     <td class="photography_column">
                         Instagram
                     </td>
-                    <td class="photography_space"><hr/></td>
+                    <td class="photography_space">
+                        <hr />
+                    </td>
                     <td class="photography_column">
-                        <span><a class="Instagrambutton" href="https://www.instagram.com/_we_for_us_/?hl=en" target="_blank">Follow on<br/>Instagram</a></span>
+                        <span><a class="Instagrambutton" href="https://www.instagram.com/_we_for_us_/?hl=en"
+                                target="_blank">Follow on<br />Instagram</a></span>
                     </td>
                 </tr>
                 <tr class="photography_row_space">
@@ -340,17 +426,24 @@
                     <td class="photography_column">
                         photographer_in_me
                     </td>
-                    <td class="photography_space"><hr/></td>
+                    <td class="photography_space">
+                        <hr />
+                    </td>
                     <td class="photography_column">
                         <img class="weforuslogo_img" src="Unsplash.avif" alt="We For Us Logo">
                     </td>
-                    <td class="photography_space"><hr/></td>
+                    <td class="photography_space">
+                        <hr />
+                    </td>
                     <td class="photography_column">
                         Unsplash
                     </td>
-                    <td class="photography_space"><hr/></td>
+                    <td class="photography_space">
+                        <hr />
+                    </td>
                     <td class="photography_column">
-                        <span><a class="Unsplashbutton" href="https://unsplash.com/@photographer_in_me" target="_blank">Hire me on<br/>Unsplash</a></span>
+                        <span><a class="Unsplashbutton" href="https://unsplash.com/@photographer_in_me"
+                                target="_blank">Hire me on<br />Unsplash</a></span>
                     </td>
                 </tr>
             </table>
@@ -359,8 +452,8 @@
     <!--Contact-->
     <section id="contact">
         <div class="contact">
-            <hr/>
-            <span class= "contact_Header">Contact</span><br/>
+            <hr />
+            <span class="contact_Header">Contact</span><br />
             <table class="contact_table">
                 <tr class="contact_space">
                     <td></td>
@@ -369,13 +462,16 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="https://www.linkedin.com/in/srikanthpettem/"><img class="linkedin_image" src="linkedin.png" alt="Linkedin_Logo"></a>
+                        <a href="https://www.linkedin.com/in/srikanthpettem/"><img class="linkedin_image"
+                                src="linkedin.png" alt="Linkedin_Logo"></a>
                     </td>
                     <td>
-                        <a href="https://github.com/SrikanthPettem1"><img class="github_image" src="github.jpeg" alt="Linkedin_Logo"></a>
+                        <a href="https://github.com/SrikanthPettem1"><img class="github_image" src="github.jpeg"
+                                alt="Linkedin_Logo"></a>
                     </td>
                     <td>
-                        <a href="https://wa.me/9701365427"><img class="WhatsApp_image" src="WhatsApp.png" alt="Linkedin_Logo"></a>
+                        <a href="https://wa.me/9701365427"><img class="WhatsApp_image" src="WhatsApp.png"
+                                alt="Linkedin_Logo"></a>
                     </td>
                 </tr>
                 <tr class="contact_space">
@@ -392,4 +488,5 @@
         </div>
     </footer>
 </body>
+
 </html>
