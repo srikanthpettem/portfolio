@@ -1,0 +1,59 @@
+/* Theme-specific contrast and typography refinements. */
+:root { color-scheme: dark; }
+html[data-theme="light"] { color-scheme: light; }
+
+body {
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+/* These panels always sit on photography, so they keep a dark, high-contrast surface in either theme. */
+.glass-card {
+  color: #f8fbff;
+  background: rgba(12, 20, 36, .86);
+  border-color: rgba(240, 246, 255, .22);
+}
+
+.glass-card strong {
+  color: #fff;
+  font-weight: 700;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, .28);
+}
+
+.role-card .card-label {
+  color: #72e9d5;
+  font-size: .6rem;
+  font-weight: 500;
+}
+
+.role-card span:last-child {
+  color: rgba(240, 246, 255, .78);
+  font-size: .7rem;
+  font-weight: 500;
+}
+
+.signal-card {
+  color: rgba(248, 251, 255, .94);
+  font-size: .67rem;
+  font-weight: 500;
+  letter-spacing: .01em;
+}
+
+.signal-card .signal-bars i { background: #72e9d5; }
+
+html[data-theme="light"] .glass-card {
+  background: rgba(12, 20, 36, .92);
+  box-shadow: 0 1rem 2rem rgba(38, 50, 78, .18);
+}
+
+html[data-theme="light"] .mono-label,
+html[data-theme="light"] .site-footer { font-weight: 500; }
+
+html[data-theme="light"] .cursor-glow { background: rgba(126, 75, 209, .06); }
+
+@media (max-width: 480px) {
+  .signal-card { font-size: .64rem; }
+  .role-card span:last-child { font-size: .67rem; }
+}

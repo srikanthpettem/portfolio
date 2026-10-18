@@ -1,492 +1,100 @@
-<!DOCTYPE html>
-<!DOCTYPE html>
-<html lang="en">
-
+<!doctype html>
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="main.css">
-    <link rel="stylesheet" href="header.css">
-    <link rel="stylesheet" href="home.css">
-    <link rel="stylesheet" href="timeline.css">
-    <link rel="stylesheet" href="contact.css">
-    <link rel="stylesheet" href="writing.css">
-    <link rel="stylesheet" href="footer.css">
-    <link rel="stylesheet" href="photography.css">
-    <script src="Basic_interaction.js"></script>
-    <title>SRIKANTH PETTEM</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Srikanth Pettem is an Oracle Fusion CX Consultant who builds clearer, faster enterprise systems through automation, analytics, and AI.">
+  <meta name="theme-color" content="#090d18">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="main.css">
+  <link rel="stylesheet" href="theme.css">
+  <script src="Basic_interaction.js" defer></script>
+  <title>Srikanth Pettem - Oracle Fusion CX Consultant</title>
 </head>
-
 <body>
-    <!-- Header -->
-    <section>
-        <header>
-            <div class="topnav">
-                <a href="#home">Home</a><span class="pipe"> | </span>
-                <a href="#timeline">Timeline</a><span class="pipe"> | </span>
-                <a href="#writing">Writing</a><span class="pipe"> | </span>
-                <a href="#photography">Photography</a><span class="pipe"> | </span>
-                <a href="#contact">Contact</a>
-                <span class="pipe"> | </span>
-                <!-- Availability status placeholder -->
-                <span class="pipe" id="availability-label">Status:</span>
-                <span class="pipe" id="status">Loading...</span>
-            </div>
-        </header>
-    </section>
-    <!--MongoDB Status Fetching-->
-    <script>
-        async function fetchPublicIP() {
-            try {
-                const res = await fetch("https://api.ipify.org?format=json");
-                const { ip } = await res.json();
-                return ip;
-            } catch (err) {
-                console.warn("ipify failed, falling back to default IP or error handler", err);
-                return null;
-            }
-        }
+  <div class="page-noise" aria-hidden="true"></div>
+  <div class="cursor-glow" aria-hidden="true"></div>
 
-        async function fetchStatus() {
-            const publicIP = await fetchPublicIP();
-            if (!publicIP) {
-                document.getElementById("status").textContent = "Status unavailable";
-                return;
-            }
+  <header class="site-header">
+    <a class="brand" href="#top" aria-label="Srikanth Pettem, home"><span class="brand-mark">SP</span><span class="brand-name">Srikanth<br>Pettem</span></a>
+    <nav id="primary-nav" class="nav-links" aria-label="Primary navigation">
+      <a href="#about">About</a><a href="#expertise">Expertise</a><a href="#experience">Experience</a><a href="#perspective">Perspective</a><a class="nav-cta" href="#contact">Let's talk <span aria-hidden="true">↗</span></a>
+    </nav>
+    <div class="header-actions">
+      <button class="theme-toggle" type="button" aria-label="Switch to light theme" aria-pressed="false">
+        <span class="theme-toggle-icon" aria-hidden="true">☾</span><span class="theme-toggle-label">Dark</span>
+      </button>
+      <button class="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span></button>
+    </div>
+  </header>
 
-            try {
-                const res = await fetch(`http://${publicIP}:3000/status`, {
-                    headers: { "Authorization": "Basic " + btoa("apiuser:apipassword") }
-                });
-                const data = await res.json();
-                document.getElementById("status").textContent = data[0]?.Status ?? "No data";
-            } catch (err) {
-                console.error("Error fetching status from your API:", err);
-                document.getElementById("status").textContent = "Error fetching status";
-            }
-        }
+  <main id="top">
+    <section class="hero section-shell" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="status-dot"></span> Building better enterprise experiences</p>
+        <h1 id="hero-title">Systems that feel<br><em>simple.</em></h1>
+        <p class="hero-intro">I'm <strong>Srikanth Pettem</strong>, an Oracle Fusion CX Consultant who turns complex operations into useful, intuitive experiences through automation, analytics, and AI.</p>
+        <div class="hero-actions"><a class="button button-primary" href="#experience">Explore my work <span aria-hidden="true">↓</span></a><a class="text-link" href="mailto:srikanth.pettem@outlook.com">Start a conversation <span aria-hidden="true">↗</span></a></div>
+      </div>
+      <div class="hero-visual" aria-label="Portrait of Srikanth Pettem">
+        <div class="orbit orbit-one" aria-hidden="true"></div><div class="orbit orbit-two" aria-hidden="true"></div>
+        <div class="portrait-frame"><img src="Srikanth.jpg" alt="Srikanth Pettem standing outdoors"></div>
+        <div class="role-card glass-card"><span class="card-label">CURRENTLY</span><strong>Fusion CX Consultant</strong><span>Oracle · Hyderabad, India</span></div>
+        <div class="signal-card glass-card"><span class="signal-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Automation is a form<br>of good service.</span></div>
+      </div>
+      <div class="hero-footer"><p class="mono-label">Scroll to explore</p><div class="hero-footer-line" aria-hidden="true"></div><p class="mono-label">Oracle CX · AI · Systems Design</p></div>
+    </section>
 
-        fetchStatus();
-    </script>
-    <!--MongoDB Status Fetching End-->
-    <!--Script to get the Status-->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const statusEl = document.getElementById('availability-status');
-            const endpoint = 'https://script.google.com/macros/s/AKfycbyXOIjjYwgGqZBGjP5likcisV_tVIrnDpIe4HceYfVZUUMD98LANGUzwuFvFJ2LYKVD/exec'; // replace with your Web App URL
+    <section id="about" class="about section-shell section-space" aria-labelledby="about-title">
+      <div class="section-kicker"><span>01</span><span>What I bring</span></div>
+      <div class="about-grid">
+        <h2 id="about-title">I build the connective tissue between <em>people, process,</em> and platform.</h2>
+        <div class="about-copy"><p>For over five years, I have worked where customer experience meets enterprise technology - guiding Oracle Fusion CX implementations from early conversations to stable, scalable outcomes.</p><p>My approach is equal parts structured and curious: understand the real business problem, design the cleanest path through it, then make the solution easier to run tomorrow than it is today.</p><a class="text-link" href="#perspective">More about how I think <span aria-hidden="true">↘</span></a></div>
+      </div>
+      <div class="metrics" aria-label="Career highlights">
+        <article class="metric-card"><strong>5<span>+</span></strong><p>years shaping enterprise CX</p></article><article class="metric-card"><strong>8</strong><p>global projects delivered</p></article><article class="metric-card"><strong>90<span>%</span></strong><p>faster root-cause analysis</p></article><article class="metric-card"><strong>50<span>%</span></strong><p>productivity lift with AI</p></article>
+      </div>
+    </section>
 
-            async function getStatus() {
-                try {
-                    const res = await fetch(endpoint);
-                    const data = await res.json();
-                    statusEl.textContent = data.status || 'Unknown';
-                } catch (err) {
-                    console.error('Failed to fetch status:', err);
-                    statusEl.textContent = 'Error';
-                }
-            }
+    <section id="expertise" class="expertise section-shell section-space" aria-labelledby="expertise-title">
+      <div class="section-heading"><div class="section-kicker"><span>02</span><span>Core expertise</span></div><h2 id="expertise-title">Not just configuration.<br><em>Capability.</em></h2></div>
+      <div class="expertise-grid">
+        <article class="expertise-card card-cx"><span class="card-index">01 / CX</span><div class="card-icon" aria-hidden="true">◌</div><h3>Customer<br>experience</h3><p>Designing sales and service operations that are intuitive for the people who use them every day.</p><ul class="skill-list"><li>Fusion Sales &amp; Service</li><li>Lead &amp; opportunity management</li><li>Service requests &amp; access management</li></ul></article>
+        <article class="expertise-card card-flow"><span class="card-index">02 / FLOW</span><div class="card-icon" aria-hidden="true">↗</div><h3>Automation<br>&amp; integration</h3><p>Connecting systems, removing friction, and giving teams more room for work that needs human judgment.</p><ul class="skill-list"><li>Oracle Integration Cloud</li><li>Groovy scripting &amp; workflows</li><li>REST / SOAP APIs</li></ul></article>
+        <article class="expertise-card card-insight"><span class="card-index">03 / INSIGHT</span><div class="card-icon" aria-hidden="true">✦</div><h3>Insight<br>&amp; intelligence</h3><p>Turning operational data into a clear signal - and using AI where it can add practical value.</p><ul class="skill-list"><li>OTBI / OBIEE analytics</li><li>Oracle AI Agent Studio</li><li>Redwood UI &amp; VBCS</li></ul></article>
+      </div>
+      <div class="tech-marquee" aria-label="Additional skills"><div>ORACLE JET <span>✦</span> POSTGRESQL <span>✦</span> WEB TECHNOLOGY <span>✦</span> SYSTEM DESIGN <span>✦</span> TECHNICAL RESEARCH <span>✦</span> ORACLE CPQ <span>✦</span> ELOQUA <span>✦</span></div></div>
+    </section>
 
-            getStatus();
-        });
-    </script>
-    <!--Script to get the status-->
-    <!-- Intro : Just name and image -->
-    <section id="home" class="home">
-        <div class="srikanth">
-            <h1 class="name">Srikanth Pettem</h1>
-            <p class="tag_line">Engineer by choice | Writer by nature</p>
-        </div>
+    <section id="experience" class="experience section-shell section-space" aria-labelledby="experience-title">
+      <div class="section-heading experience-heading"><div class="section-kicker"><span>03</span><span>Selected experience</span></div><h2 id="experience-title">A career defined by<br><em>useful outcomes.</em></h2></div>
+      <div class="experience-list">
+        <article class="experience-item featured-experience"><div class="experience-period">2023 — now</div><div class="experience-main"><p class="experience-company">Oracle <span>·</span> Hyderabad, India</p><h3>Staff Consultant</h3><p class="experience-description">Building more dependable, more human Fusion CX experiences across sales, service, integration, diagnostics, and AI adoption.</p><div class="impact-pills"><span>40% less navigation time</span><span>90% faster RCA</span><span>50% productivity lift</span></div></div><div class="experience-note">Redwood UI, AI agents, OIC integrations, diagnostic dashboards, quarterly release readiness, and mentoring.</div></article>
+        <article class="experience-item"><div class="experience-period">2021 — 2023</div><div class="experience-main"><p class="experience-company">Innovacx <span>·</span> Hyderabad, India</p><h3>Enterprise Solutions Specialist</h3><p class="experience-description">Helped carry implementations from pre-sales and discovery through configuration, data migration, go-live, and support.</p></div><div class="experience-note">Custom audit objects, service automation, secure role matrices, reporting, integrations, and performance tuning.</div></article>
+        <article class="experience-item compact-experience"><div class="experience-period">2021</div><div class="experience-main"><p class="experience-company">Innovacx <span>·</span> Hyderabad, India</p><h3>Software Engineer Intern</h3></div><div class="experience-note">First hands-on experience of enterprise solutions and collaborative delivery.</div></article>
+      </div>
+      <div class="certifications"><p class="mono-label">Recognised learning</p><div><span>OCI 2025 Generative AI Professional</span><span>Fusion AI Agent Studio Foundations</span><span>Oracle CX Process Essentials</span><span>Redwood Application Developer</span></div></div>
     </section>
-    <!-- Timeline -->
-    <section id="timeline">
-        <div class="timeline">
-            <table class="timelineTable">
-                <!------------------------------------------------------------------->
-                <!--Row Space-->
-                <tr class="row_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="timeline_pipe">|</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <!-- Present Oracle-->
-                <tr>
-                    <td class="column_space"></td> <!--Space-->
-                    <td class="wrap_column">
-                        Oracle<br />
-                        Staff Consultant
-                    </td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column_time">Present</td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column">
-                        Learning Next Gen Sales
-                    </td>
-                    <td class="column_space"></td> <!--Space-->
-                </tr>
-                <!------------------------------------------------------------------->
-                <!--Row Space-->
-                <tr class="row_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="timeline_pipe">|</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <!--2021 - 2023 InnovaCX-->
-                <tr>
-                    <td class="column_space"></td> <!--Space-->
-                    <td class="wrap_column">
-                        InnovaCX<br />
-                        Specialist-Enterprise Innovations
-                    </td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column_time">2023</td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column">
-                        Here I exposed to the real IT industry. And got chance to understand complete software life
-                        cycle from customer with a problem to customer with a solution.
-                    </td>
-                    <td class="column_space"></td> <!--Space-->
-                </tr>
-                <!------------------------------------------------------------------->
-                <!--Row Space-->
-                <tr class="row_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="timeline_pipe">|</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <!--2021 B.Tech-->
-                <tr>
-                    <td class="column_space"></td> <!--Space-->
-                    <td class="wrap_column">
-                        Kakatiya University<br />
-                        Bachelor of Technology - Under Graduation
-                    </td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column_time">2021</td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column">
-                        Here I got the chance to push myself to became a better version of me. I proved my Leadership,
-                        problem solving skils by fulfilling the Class Representative role effectively.
-                    </td>
-                    <td class="column_space"></td> <!--Space-->
-                </tr>
-                <!------------------------------------------------------------------->
-                <!--Row Space-->
-                <tr class="row_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="timeline_pipe">|</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <!--2019 Tutor-->
-                <tr>
-                    <td class="column_space"></td> <!--Space-->
-                    <td class="wrap_column">
-                        Academic Tutor(Self Employed)<br />
-                        Nava Bharat Public School
-                    </td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column_time">2019</td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column">
-                        Here I started exposing in the society and improved my social communication skills.
-                    </td>
-                    <td class="column_space"></td> <!--Space-->
-                </tr>
-                <!------------------------------------------------------------------->
-                <!--Row Space-->
-                <tr class="row_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="timeline_pipe">|</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <!--2017 Inter-->
-                <tr>
-                    <td class="column_space"></td> <!--Space-->
-                    <td class="wrap_column">
-                        Vagheshwara Junior College<br />
-                        Telangana State Board of Intermediate Education
-                    </td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column_time">2017</td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column">
-                        During my intermediate I was intensively interested in geometry and physics.
-                    </td>
-                    <td class="column_space"></td> <!--Space-->
-                </tr>
-                <!------------------------------------------------------------------>
-                <!--Row Space-->
-                <tr class="row_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="timeline_pipe">|</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <!--2015 tenth-->
-                <tr>
-                    <td class="column_space"></td> <!--Space-->
-                    <td class="wrap_column">
-                        Zilla Parishad High School<br />
-                        Board of Secondary Education
-                    </td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column_time">2015</td>
-                    <td class="column_space">
-                        <hr />
-                    </td> <!--Space-->
-                    <td class="wrap_column">
-                        This is the place where I started learning how to learn and unlearn under the guidance of
-                        supportive, encouraging teachers.
-                    </td>
-                    <td class="column_space"></td> <!--Space-->
-                </tr>
-                <!--Row Space-->
-                <tr class="row_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td class="timeline_pipe">|</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-        </div>
-    </section>
-    <!-- Writing -->
-    <section id="writing">
 
-        <div class="writing">
-            <hr />
-            <span class="Writings_Header">Writings</span><br />
-            <table class="writing_table">
-                <tr class="writing_row_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="writing_column">
-                        We For Us
-                    </td>
-                    <td class="writing_space">
-                        <hr />
-                    </td>
-                    <td class="writing_column">
-                        <img class="weforuslogo_img" src="We_For_Us.jpeg" alt="We For Us Logo">
-                    </td>
-                    <td class="writing_space">
-                        <hr />
-                    </td>
-                    <td class="writing_column">
-                        Newsletter
-                    </td>
-                    <td class="writing_space">
-                        <hr />
-                    </td>
-                    <td class="writing_column">
-                        <span><a class="linkedinbutton"
-                                href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=6882975974401687552"
-                                target="_blank">Subscribe on<br />LinkedIn</a></span>
-                    </td>
-                </tr>
-            </table>
+    <section id="perspective" class="perspective section-shell section-space" aria-labelledby="perspective-title">
+      <div class="section-kicker"><span>04</span><span>Beyond the build</span></div>
+      <div class="perspective-grid">
+        <div class="perspective-copy"><h2 id="perspective-title">Clear thinking is a<br><em>creative practice.</em></h2><p>I am an engineer by choice, but not only an engineer. Writing teaches me to make an idea precise. Photography trains me to notice. Chess keeps me patient. Together, they shape how I approach systems and the people inside them.</p><div class="traits"><span>Leadership</span><span>Curiosity</span><span>Communication</span><span>Accountability</span><span>Adaptability</span><span>Problem solving</span></div></div>
+        <div class="perspective-aside">
+          <a class="side-link newsletter-link" href="https://www.linkedin.com/build-relation/newsletter-follow?entityUrn=6882975974401687552" target="_blank" rel="noreferrer"><span class="side-link-top"><span class="side-link-index">01</span><span aria-hidden="true">↗</span></span><strong>We For Us</strong><span>A newsletter for ideas worth sharing.</span></a>
+          <a class="side-link" href="https://unsplash.com/@photographer_in_me" target="_blank" rel="noreferrer"><span class="side-link-top"><span class="side-link-index">02</span><span aria-hidden="true">↗</span></span><strong>Frames &amp; light</strong><span>See my photography on Unsplash.</span></a>
+          <a class="side-link" href="https://www.youtube.com/@weforus3" target="_blank" rel="noreferrer"><span class="side-link-top"><span class="side-link-index">03</span><span aria-hidden="true">↗</span></span><strong>Stories in motion</strong><span>Follow We For Us on YouTube.</span></a>
         </div>
+      </div>
     </section>
-    <!-- photography -->
-    <section id="photography">
-        <div class="photography">
-            <hr />
-            <span class="photography_Header">Photography</span><br />
-            <table class="photography_table">
-                <tr class="photography_row_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="photography_column">
-                        We For Us
-                    </td>
-                    <td class="photography_space">
-                        <hr />
-                    </td>
-                    <td class="photography_column">
-                        <img class="weforuslogo_img" src="We_For_Us.jpeg" alt="We For Us Logo">
-                    </td>
-                    <td class="photography_space">
-                        <hr />
-                    </td>
-                    <td class="photography_column">
-                        YouTube
-                    </td>
-                    <td class="photography_space">
-                        <hr />
-                    </td>
-                    <td class="photography_column">
-                        <span><a class="Youtubebutton" href="https://www.youtube.com/@weforus3"
-                                target="_blank">Subscribe on<br />Youtube</a></span>
-                    </td>
-                </tr>
-                <tr class="photography_row_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="photography_column">
-                        _We_For_Us_
-                    </td>
-                    <td class="photography_space">
-                        <hr />
-                    </td>
-                    <td class="photography_column">
-                        <img class="weforuslogo_img" src="We_For_Us.jpeg" alt="We For Us Logo">
-                    </td>
-                    <td class="photography_space">
-                        <hr />
-                    </td>
-                    <td class="photography_column">
-                        Instagram
-                    </td>
-                    <td class="photography_space">
-                        <hr />
-                    </td>
-                    <td class="photography_column">
-                        <span><a class="Instagrambutton" href="https://www.instagram.com/_we_for_us_/?hl=en"
-                                target="_blank">Follow on<br />Instagram</a></span>
-                    </td>
-                </tr>
-                <tr class="photography_row_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="photography_column">
-                        photographer_in_me
-                    </td>
-                    <td class="photography_space">
-                        <hr />
-                    </td>
-                    <td class="photography_column">
-                        <img class="weforuslogo_img" src="Unsplash.avif" alt="We For Us Logo">
-                    </td>
-                    <td class="photography_space">
-                        <hr />
-                    </td>
-                    <td class="photography_column">
-                        Unsplash
-                    </td>
-                    <td class="photography_space">
-                        <hr />
-                    </td>
-                    <td class="photography_column">
-                        <span><a class="Unsplashbutton" href="https://unsplash.com/@photographer_in_me"
-                                target="_blank">Hire me on<br />Unsplash</a></span>
-                    </td>
-                </tr>
-            </table>
-        </div>
+
+    <section id="contact" class="contact section-shell" aria-labelledby="contact-title">
+      <div class="contact-grid-pattern" aria-hidden="true"></div><p class="eyebrow"><span class="status-dot"></span> Open to meaningful conversations</p><h2 id="contact-title">Let’s make the<br>complex feel <em>clear.</em></h2><a class="contact-email" href="mailto:srikanth.pettem@outlook.com">srikanth.pettem@outlook.com <span aria-hidden="true">↗</span></a>
+      <div class="contact-bottom"><p>Based in Telangana, India<br>Available with a 30-day notice period</p><div class="social-links"><a href="https://www.linkedin.com/in/srikanthpettem/" target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a><a href="https://github.com/SrikanthPettem1" target="_blank" rel="noreferrer">GitHub <span aria-hidden="true">↗</span></a><a href="https://wa.me/9701365427" target="_blank" rel="noreferrer">WhatsApp <span aria-hidden="true">↗</span></a></div></div>
     </section>
-    <!--Contact-->
-    <section id="contact">
-        <div class="contact">
-            <hr />
-            <span class="contact_Header">Contact</span><br />
-            <table class="contact_table">
-                <tr class="contact_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="https://www.linkedin.com/in/srikanthpettem/"><img class="linkedin_image"
-                                src="linkedin.png" alt="Linkedin_Logo"></a>
-                    </td>
-                    <td>
-                        <a href="https://github.com/SrikanthPettem1"><img class="github_image" src="github.jpeg"
-                                alt="Linkedin_Logo"></a>
-                    </td>
-                    <td>
-                        <a href="https://wa.me/9701365427"><img class="WhatsApp_image" src="WhatsApp.png"
-                                alt="Linkedin_Logo"></a>
-                    </td>
-                </tr>
-                <tr class="contact_space">
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-        </div>
-    </section>
-    <footer>
-        <div class="footer">
-            &copy; Right 2024. WE FOR US. All rights reserved.
-        </div>
-    </footer>
+  </main>
+  <footer class="site-footer section-shell"><span>© <span id="current-year">2026</span> Srikanth Pettem</span><span>Designed with purpose / Built for clarity</span></footer>
 </body>
-
 </html>
