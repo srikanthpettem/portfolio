@@ -51,6 +51,13 @@ html[data-theme="light"] .glass-card {
 html[data-theme="light"] .mono-label,
 html[data-theme="light"] .site-footer { font-weight: 500; }
 
+html[data-theme="light"] .traits span {
+  color: #46546b;
+  background: #e8edf6;
+  border: 1px solid rgba(53, 70, 102, .14);
+  font-weight: 700;
+}
+
 html[data-theme="light"] .cursor-glow { background: rgba(126, 75, 209, .06); }
 
 @media (max-width: 480px) {
