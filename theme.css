@@ -43,6 +43,19 @@ body {
 
 .signal-card .signal-bars i { background: #72e9d5; }
 
+/* The contact panel is deliberately dark in both themes. */
+.contact,
+.contact h2 { color: #f8fbff; }
+
+.contact h2 em,
+.contact .eyebrow,
+.contact .social-links a span { color: #72e9d5; }
+
+.contact .status-dot { background: #72e9d5; }
+
+.contact .social-links a { color: rgba(248, 251, 255, .82); }
+.contact .social-links a:hover { color: #fff; }
+
 html[data-theme="light"] .glass-card {
   background: rgba(12, 20, 36, .92);
   box-shadow: 0 1rem 2rem rgba(38, 50, 78, .18);
